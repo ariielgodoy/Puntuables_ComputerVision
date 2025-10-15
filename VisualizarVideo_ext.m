@@ -6,6 +6,7 @@ function VisualizarVideo_ext(fichero)
 % Define las condiciones de finalización y pausa del programa, se invoca
 % a la función 'Terminar' o 'Pausar' por medio del ratón.
 global fin
+umbral_mano = 300;
 fin = 0;
 f = figure;
 f.ButtonDownFcn = @Pausar;
@@ -22,8 +23,9 @@ im2 = readFrame(v); %Lee el siguente frame del fichero.
 im2g = double(rgb2gray(im2))/255;
 im = 1*abs(im2g-im1g);
 imshow (im1);
-mano = sum(sum(im));
-if mano > 300
+mano = sum(sum(im)); %Aqui sumo todos los valores de la matriz restada
+if mano > umbral_mano %Coloco un umbral para detectar la mano, la cual es
+    %la suma de todos los pixeles de la imagen
     disp("Hay mano")
 else
     disp("No hay mano")
