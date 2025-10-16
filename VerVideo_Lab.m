@@ -5,7 +5,7 @@ function VerVideo_Lab(fichero)
     f.WindowScrollWheelFcn = @(~,~) close(f); 
     umbral_A_minimo = 0.026; %Valor de a en Lab para contar pixel
     %como posible perteneciente a una mano
-    umbral_A_maximo = 0.09
+    umbral_A_maximo = 0.09;
     umbral_pixeles_minimos = 5000; %Número de pixeles minimos para decir que
     %hay una mano en el video.
 
@@ -21,14 +21,23 @@ function VerVideo_Lab(fichero)
         mascara = mascara & mascara_altos;
         vector_pixeles_posibles=sum(mascara);
         suma_vector_pixeles_posibles = sum(vector_pixeles_posibles);
-        if (suma_vector_pixeles_posibles>umbral_pixeles_minimos)
-            disp("Mano")
-        else
-            disp("No hay mano")
-        end
+        
         a_norm(mascara) = a_norm(mascara) * 10;
-        imshow(a_norm), title('Canal a')
+        imshow(frame), title('Canal a')
+        hold on;
+        if suma_vector_pixeles_posibles > umbral_pixeles_minimos
+            text(size(a_norm,2)/2, size(a_norm,1) + 20, 'MANO PRESENTE', ...
+                'Color', 'red', 'FontSize', 16, 'FontWeight', 'bold', ...
+                'HorizontalAlignment', 'center', 'VerticalAlignment', 'top');
+        else
+            text(size(a_norm,2)/2, size(a_norm,1) + 20, 'LIBRE → CONTAR', ...
+                'Color', 'green', 'FontSize', 16, 'FontWeight', 'bold', ...
+                'HorizontalAlignment', 'center', 'VerticalAlignment', 'top');
+        end
 
-        drawnow
+        hold off;
+        
+
+        drawnow;
     end
 end
