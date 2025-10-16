@@ -21,7 +21,7 @@ function VerVideo_Lab(fichero)
         mascara = mascara & mascara_altos;
         vector_pixeles_posibles=sum(mascara);
         suma_vector_pixeles_posibles = sum(vector_pixeles_posibles);
-        if (suma_vector_pixeles_posibles>5000)
+        if (suma_vector_pixeles_posibles>umbral_pixeles_minimos)
             disp("Mano")
         else
             disp("No hay mano")
