@@ -18,13 +18,14 @@ function VerVideo_Lab(fichero)
         mascara = a_norm > umbral_A_minimo; %Buscar píxeles que superen el
         %umbral
         mascara_altos = a_norm < umbral_A_maximo;
-        mascara = mascara & mascara_altos;
+        mascara = mascara & mascara_altos; %Haciendo una union de las dos mascaras
+        %para quitar los pixeles de las chinchetas
         vector_pixeles_posibles=sum(mascara);
         suma_vector_pixeles_posibles = sum(vector_pixeles_posibles);
         
         a_norm(mascara) = a_norm(mascara) * 10;
         imshow(frame), title('Canal a')
-        hold on;
+        hold on;%Display del texto
         if suma_vector_pixeles_posibles > umbral_pixeles_minimos
             text(size(a_norm,2)/2, size(a_norm,1) + 20, 'MANO PRESENTE', ...
                 'Color', 'red', 'FontSize', 16, 'FontWeight', 'bold', ...
